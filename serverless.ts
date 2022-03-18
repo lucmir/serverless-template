@@ -5,7 +5,10 @@ import hello from '@functions/hello';
 const serverlessConfiguration: AWS = {
   service: 'myservice',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: [
+    'serverless-webpack',
+    'serverless-offline',
+  ],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -22,15 +25,33 @@ const serverlessConfiguration: AWS = {
   functions: { hello },
   package: { individually: true },
   custom: {
-    esbuild: {
-      bundle: true,
-      minify: false,
-      sourcemap: true,
-      exclude: ['aws-sdk'],
-      target: 'node14',
-      define: { 'require.resolve': undefined },
-      platform: 'node',
-      concurrency: 10,
+    defaultStage: 'local',
+    stage: '${opt:stage, self:custom.defaultStage}',
+    // serverless-webpack
+    webpack: {
+      webpackConfig: './webpack.config.js',
+      includeModules: {
+        forceExclude: ['aws-sdk'],
+      },
+      packager: 'yarn',
+      packagerOptions: {
+        // needed for yarn to support allowlists in the webpack nodeExternals config
+        noFrozenLockfile: true,
+        scripts: ['rm -rf node_modules/aws-sdk'],
+      },
+    },
+    // serverless-plugin-warmup
+    warmup: {
+      default: {
+        // only enable the warmup in prod and preprod
+        enabled: ['preprod', 'prod'].includes(process.env.STAGE),
+        prewarm: true,
+      },
+    },
+    // serverless-prune-plugin
+    prune: {
+      automatic: true,
+      number: 3,
     },
   },
 };
