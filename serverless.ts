@@ -8,6 +8,9 @@ const serverlessConfiguration: AWS = {
   plugins: [
     'serverless-webpack',
     'serverless-offline',
+    'serverless-plugin-warmup',
+    'serverless-prune-plugin',
+    'serverless-dotenv-plugin',
   ],
   provider: {
     name: 'aws',
@@ -43,9 +46,7 @@ const serverlessConfiguration: AWS = {
     // serverless-plugin-warmup
     warmup: {
       default: {
-        // only enable the warmup in prod and preprod
-        enabled: ['preprod', 'prod'].includes(process.env.STAGE),
-        prewarm: true,
+        enabled: true,
       },
     },
     // serverless-prune-plugin

@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@middy/core": "^2.5.3",
-    "@middy/http-json-body-parser": "^2.5.3"
+    "@middy/http-json-body-parser": "^2.5.3",
+    "@middy/warmup": "^2.5.7",
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
@@ -26,7 +27,7 @@
     "serverless-export-env": "2.0.0",
     "serverless-offline": "^8.3.1",
     "serverless-offline-dotenv": "^0.4.0",
-    "serverless-plugin-warmup": "^5.3.1",
+    "serverless-plugin-warmup": "^7.1.0",
     "serverless-prune-plugin": "^1.5.1",
     "serverless-webpack": "5.5.4",
     "sinon": "^13.0.1",
