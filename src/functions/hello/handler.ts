@@ -1,14 +1,15 @@
+import schema from './schema';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
+import { getConfig } from '../../config';
+import { standardMiddleware } from "../../middleware";
 
-import schema from './schema';
-
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
+  const config = getConfig();
   return formatJSONResponse({
-    message: `Hello ${event.body.name}, welcome to the exciting Serverless world!`,
-    event,
+    message: `Hello, "${config.name}"! You have ${config.age} years`,
   });
 };
 
-export const main = middyfy(hello);
+export const main = middyfy(standardMiddleware(hello));

@@ -5,20 +5,25 @@
   "main": "serverless.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "offline": "NODE_ENV=test STAGE=${STAGE:-local} sls offline --stage ${STAGE:-local} --httpPort=${PORT:-3001}"
+    "offline": "NODE_ENV=test STAGE=${STAGE:-local} sls offline --stage ${STAGE:-local} --httpPort=${PORT:-3001}",
+    "deploy": "STAGE=${STAGE:-dev} sls deploy --stage ${STAGE:-dev}"
   },
   "engines": {
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "@middy/core": "^2.5.3",
-    "@middy/http-json-body-parser": "^2.5.3",
+    "@middy/core": "^2.5.7",
+    "@middy/http-json-body-parser": "^2.5.7",
+    "@middy/ssm": "^2.5.7",
     "@middy/warmup": "^2.5.7",
+    "civic-middleware-lambda": "github:civicteam/civic-middleware-lambda#1.12.4",
+    "ramda": "^0.28.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.25",
+    "@types/ramda": "^0.28.1",
     "dotenv": "^16.0.0",
     "json-schema-to-ts": "^1.5.0",
     "path": "^0.12.7",
