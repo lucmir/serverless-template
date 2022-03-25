@@ -26,9 +26,14 @@ export const remoteConfigMiddleware = ({ remoteConfigName }) => {
 
       request.internal = {}; // FIXME
 
-      await baseMiddleware.before(request);
-      const remoteConfigs = context[contextKey];
+      try {
+        await baseMiddleware.before(request);
+      } catch (error) {
+        console.log('Could not get remote config');
+        return;
+      }
 
+      const remoteConfigs = context[contextKey];
       updateConfig(remoteConfigs);
     },
   }

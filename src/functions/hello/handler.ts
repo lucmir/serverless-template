@@ -6,10 +6,8 @@ import { getConfig } from '../../config';
 import { standardMiddleware } from "../../middleware";
 
 const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
-  const config = getConfig();
-  return formatJSONResponse({
-    message: `Hello, "${config.name}"! You have ${config.age} years`,
-  });
+  const configs = getConfig();
+  return formatJSONResponse(configs);
 };
 
 export const main = middyfy(standardMiddleware(hello));

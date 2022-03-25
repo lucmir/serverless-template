@@ -1,8 +1,9 @@
 import * as R from 'ramda';
 
 export type AppConfig = {
-  name: string;
-  age: number;
+  configA;
+  configB;
+  configC;
 };
 
 const loadStageConfig = (): Partial<AppConfig> => {
@@ -16,8 +17,9 @@ const loadStageConfig = (): Partial<AppConfig> => {
 };
 
 const defaultConfig: Partial<AppConfig> = {
-  name: 'Lucas',
-  age: 100
+  configA: 'default',
+  configB: 'default',
+  configC: 'default',
 };
 
 const init = (): AppConfig => R.mergeDeepRight(defaultConfig, loadStageConfig()) as AppConfig;
